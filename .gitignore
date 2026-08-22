@@ -1,0 +1,22 @@
+# Tệp thực thi đã biên dịch
+hp
+hm
+*.out
+a.out
+
+# Tệp object
+*.o
+
+# Tệp profiling (gprof tạo ra ở Giai đoạn 2)
+gmon.out
+
+# Hệ điều hành / trình soạn thảo
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+# Python
+venv/
+__pycache__/
+*.pyc
