@@ -5,7 +5,7 @@ Result compute_station(const double* x, int n, int W, double k) {
     Result r;
     double sum = 0.0;  r.max = x[0];  r.min = x[0];
     for (int i = 0; i < n; i++) {              // (a) thống kê toàn chuỗi
-        sum += x[i];
+        sum += x[i];                            // tìm max, min, sum và mean
         if (x[i] > r.max) r.max = x[i];
         if (x[i] < r.min) r.min = x[i];
     }
@@ -13,7 +13,7 @@ Result compute_station(const double* x, int n, int W, double k) {
 
     double sq = 0.0;
     for (int i = 0; i < n; i++) { double d = x[i]-r.mean; sq += d*d; }
-    r.std = sqrt(sq / n);
+    r.std = sqrt(sq / n);                       // tính độ lệch chuẩn 
 
     r.max_roll_std = 0.0;                      // (b) cửa sổ trượt
     for (int i = 0; i + W <= n; i++) {
