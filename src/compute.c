@@ -74,3 +74,33 @@ Result compute_station(const double* h, int n, int L, int S, int H) {
     if (cnt > 0) { r.rmse = sqrt(se/cnt); r.mean_level = sum_pred/cnt; }
     return r;
 }
+
+
+/* =====  CHIA MỊN ===== */
+
+void fit_frequencies(double w[FIT_K]) {
+    for (int i = 0; i < K; i++) w[i] = 2*M_PI/PERIOD[i];
+}
+
+double fit_dt(void) { return DT; }
+
+// cộng dồn phần điểm [lo,hi) vào A,d (KHÔNG xóa A,d) — dùng cho reduction
+void fit_accumulate_range(const double* h, int lo, int hi, const double* w,
+                          double A[M][M], double d[M]) {
+    double X[M];
+    for (int j = lo; j < hi; j++) {
+        basis(j*DT, w, X);
+        for (int p = 0; p < M; p++) {
+            for (int q = 0; q < M; q++) A[p][q] += X[p]*X[q];
+            d[p] += X[p]*h[j];
+        }
+    }
+}
+
+void fit_solve(double A[M][M], double d[M], double c[M]) {
+    solve_gauss(A, d, c);
+}
+
+double fit_predict(double t, const double* w, const double c[M]) {
+    return predict(t, w, c);
+}
